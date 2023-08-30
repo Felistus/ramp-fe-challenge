@@ -13,7 +13,6 @@ export function App() {
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
   const [isLoading, setIsLoading] = useState(false)
-  const [transactionList, setTransactionList] = useState<any[]>([])
 
   const transactions = useMemo(
     () => paginatedTransactions?.data ?? transactionsByEmployee ?? null,
@@ -43,11 +42,6 @@ export function App() {
     }
   }, [employeeUtils.loading, employees, loadAllTransactions])
 
-  useEffect(() => {
-    if (transactions?.length) {
-      setTransactionList((transactionList) => [...transactionList, ...transactions])
-    }
-  }, [transactions])
   return (
     <Fragment>
       <main className="MainContainer">
@@ -80,7 +74,7 @@ export function App() {
         <div className="RampBreak--l" />
 
         <div className="RampGrid">
-          <Transactions transactions={transactionList} />
+          <Transactions transactions={transactions} />
 
           {transactions !== null && (
             <button
