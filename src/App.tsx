@@ -25,7 +25,6 @@ export function App() {
 
     await employeeUtils.fetchAll()
     await paginatedTransactionsUtils.fetchAll()
-
     setIsLoading(false)
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
 
@@ -64,8 +63,11 @@ export function App() {
             if (newValue === null) {
               return
             }
-
-            await loadTransactionsByEmployee(newValue.id)
+            if (newValue.id) {
+              await loadTransactionsByEmployee(newValue.id)
+            } else {
+              loadAllTransactions()
+            }
           }}
         />
 
