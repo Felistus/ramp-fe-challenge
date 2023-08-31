@@ -7,8 +7,10 @@ import { usePaginatedTransactions } from "./hooks/usePaginatedTransactions"
 import { useTransactionsByEmployee } from "./hooks/useTransactionsByEmployee"
 import { EMPTY_EMPLOYEE } from "./utils/constants"
 import { Employee } from "./utils/types"
+import mockData from "./mock-data.json"
 
 export function App() {
+  const localData = localStorage.getItem("mockData")
   const { data: employees, ...employeeUtils } = useEmployees()
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
@@ -46,6 +48,11 @@ export function App() {
     }
   }, [employeeUtils.loading, employees, loadAllTransactions])
 
+  useEffect(() => {
+    if (!localData) {
+      localStorage.setItem("mockData", JSON.stringify(mockData))
+    }
+  }, [localData])
   return (
     <Fragment>
       <main className="MainContainer">

@@ -6,13 +6,13 @@ import {
   Transaction,
   Employee,
 } from "./types"
-import mockData from "../mock-data.json"
 
 const TRANSACTIONS_PER_PAGE = 5
+const localData = JSON.parse(localStorage.getItem("mockData") || "{}")
 
 const data: { employees: Employee[]; transactions: Transaction[] } = {
-  employees: mockData.employees,
-  transactions: mockData.transactions,
+  employees: localData?.employees,
+  transactions: localData?.transactions,
 }
 
 export const getEmployees = (): Employee[] => data.employees
@@ -55,6 +55,6 @@ export const setTransactionApproval = ({ transactionId, value }: SetTransactionA
   if (!transaction) {
     throw new Error("Invalid transaction to approve")
   }
-
   transaction.approved = value
+  localStorage.setItem("mockData", JSON.stringify(data))
 }
