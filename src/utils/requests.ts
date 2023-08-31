@@ -6,9 +6,10 @@ import {
   Transaction,
   Employee,
 } from "./types"
+import mockData from "../mock-data.json"
 
 const TRANSACTIONS_PER_PAGE = 5
-const localData = JSON.parse(localStorage.getItem("mockData") || "{}")
+const localData = JSON.parse(localStorage.getItem("mockData") || "") ?? mockData
 
 const data: { employees: Employee[]; transactions: Transaction[] } = {
   employees: localData?.employees,
